@@ -25,20 +25,15 @@ const App = () => {
   return (
     <div>
       <Header text="give feedback" />
-      <button onClick={handleGood}>good</button>
-      <button onClick={handleNeutral}>neutral</button>
-      <button onClick={handleBad}>bad</button>
+      <Button onClick={handleGood} text="good"/>
+      <Button onClick={handleNeutral} text="neutral"/>
+      <Button onClick={handleBad} text="bad"/>
       <Header text="statistics" />
       <Statistics
         total={total}
-        stats={[
-          { value: good, name: "good" },
-          { value: neutral, name: "neutral" },
-          { value: bad, name: "bad" },
-          { value: total, name: "total" },
-          { value: (good - bad) / total, name: "average" },
-          { value: (good / total) * 100 + "%", name: "positive" },
-        ]}
+        good={good}
+        neutral={neutral}
+        bad={bad}
       />
     </div>
   );
@@ -52,7 +47,7 @@ const Display = ({ counter, name }) => (
   </p>
 );
 
-const Statistics = ({ total, stats }) => {
+const Statistics = ({ total, good, neutral, bad }) => {
   if (!total)
     return (
       <div>
@@ -60,13 +55,21 @@ const Statistics = ({ total, stats }) => {
       </div>
     );
   else {
-    let map = stats.map((e) => (
-      <p key={e.name}>
-        {e.name} {e.value}
-      </p>
-    ));
-    return <div>{map}</div>;
+    return (
+      <div>
+        <StatisticLine text="good" value={good}/>
+        <StatisticLine text="neutral" value={neutral}/>
+        <StatisticLine text="bad" value={bad}/>
+        <StatisticLine text="all" value={total}/>
+        <StatisticLine text="average" value={(good-bad)/total}/>
+        <StatisticLine text="positive" value={(good/total)*100 + "%"}/>
+      </div>
+    )
   }
 };
+
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+
+const StatisticLine = ({ text, value }) => <p>{text} {value}</p>
 
 export default App;
