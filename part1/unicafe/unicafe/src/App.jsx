@@ -21,7 +21,7 @@ const App = () => {
     setBad(bad+1);
     setTotal(total+1);
   }
-
+  
   return (
     <div>
       <Header text="give feedback"/>
@@ -29,7 +29,7 @@ const App = () => {
       <button onClick={handleNeutral}>neutral</button>
       <button onClick={handleBad}>bad</button>
       <Header text="statistics"/>
-      <Statistics stats={[{value: good, name: "good"},
+      <Statistics total={total} stats={[{value: good, name: "good"},
                         {value: neutral, name: "neutral"},
                         {value: bad, name: "bad"},
                         {value: total, name: "total"},
@@ -44,7 +44,12 @@ const Header = ({ text }) => <h1>{text}</h1>
 
 const Display = ({counter, name}) => <p>{name} {counter}</p>
 
-const Statistics = ({ stats }) => {
+const Statistics = ({ total, stats }) => {
+  if (!total) return (
+    <div>
+      <p>No feedback given</p>
+    </div>
+  )
   let map = stats.map((e) => <p key={e.name}>{e.name} {e.value}</p>);
   return (
     <div>
