@@ -29,12 +29,13 @@ const App = () => {
       <button onClick={handleNeutral}>neutral</button>
       <button onClick={handleBad}>bad</button>
       <Header text="statistics"/>
-      <Display counter={good} name="good"/>
-      <Display counter={neutral} name="neutral"/>
-      <Display counter={bad} name="bad"/>
-      <Display counter={total} name="total"/>
-      <Display counter={(good - bad)/total} name="average"/>
-      <Display counter={(good/total)*100 + "%"} name="positive"/>
+      <Statistics stats={[{value: good, name: "good"},
+                        {value: neutral, name: "neutral"},
+                        {value: bad, name: "bad"},
+                        {value: total, name: "total"},
+                        {value: (good - bad)/total, name: "average"},
+                        {value: (good/total)*100 + "%", name: "positive"},
+                        ]}/>
     </div>
   )
 }
@@ -42,5 +43,14 @@ const App = () => {
 const Header = ({ text }) => <h1>{text}</h1>
 
 const Display = ({counter, name}) => <p>{name} {counter}</p>
+
+const Statistics = ({ stats }) => {
+  let map = stats.map((e) => <p key={e.name}>{e.name} {e.value}</p>);
+  return (
+    <div>
+      {map}
+    </div>
+  )
+}
 
 export default App
