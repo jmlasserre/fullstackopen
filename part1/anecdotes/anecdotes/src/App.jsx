@@ -14,6 +14,8 @@ const App = () => {
 
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0));
+  const [maxVotes, setMaxVotes] = useState(0);
+  const [mostVotedAnecdote, setMostVotedAnecdote] = useState(0);
 
   // Based on: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
   const getRandomInt = (max) => Math.floor(Math.random() * max);
@@ -24,16 +26,37 @@ const App = () => {
     let newVotes = [...votes];
     newVotes[selected]++;
     setVotes(newVotes);
+    if (newVotes[selected] > maxVotes) {
+      setMaxVotes(newVotes[selected]);
+      setMostVotedAnecdote(selected);
+    }
   };
-
-  return (
-    <div>
-      <div>{anecdotes[selected]}</div>
-      <div>has {votes[selected]} votes</div>
-      <button onClick={handleVote}>vote</button>
-      <button onClick={handleNext}>next anecdote</button>
-    </div>
-  );
+  if (!maxVotes) {
+    return (
+      <div>
+        <Header text="Anecdote of the day" />
+        <div>{anecdotes[selected]}</div>
+        <div>has {votes[selected]} votes</div>
+        <button onClick={handleVote}>vote</button>
+        <button onClick={handleNext}>next anecdote</button>
+        <Header text="Anecdote with most votes" />
+        <div>No votes have been submitted yet.</div>
+      </div>
+    );
+  } else
+    return (
+      <div>
+        <Header text="Anecdote of the day" />
+        <div>{anecdotes[selected]}</div>
+        <div>has {votes[selected]} votes</div>
+        <button onClick={handleVote}>vote</button>
+        <button onClick={handleNext}>next anecdote</button>
+        <Header text="Anecdote with most votes" />
+        <div>{anecdotes[mostVotedAnecdote]}</div>
+      </div>
+    );
 };
+
+const Header = ({ text }) => <h2>{text}</h2>;
 
 export default App;
