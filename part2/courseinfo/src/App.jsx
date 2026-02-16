@@ -19,7 +19,7 @@ const Total = (props) => <p>Number of exercises {props.total}</p>;
 const Course = ({ course }) => {
   const renderedParts = course.parts.map((c) => <p key={c.id}>{c.name} {c.exercises}</p>);
   const total = course.parts.reduce((sum, curr) => sum + curr.exercises, 0);
-  console.log(total);
+  // No changes because I already calculated it using reduce. I watched the "Functional Programming in JS" videos and thought I could try my hand :P
   return (
     <div>
       <Header course={course.name}/>
