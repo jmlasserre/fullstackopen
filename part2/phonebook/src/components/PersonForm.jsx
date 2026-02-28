@@ -1,3 +1,5 @@
+import noteService from '../services/Persons';
+
 const PersonForm = ({
   newName,
   setNewName,
@@ -6,7 +8,7 @@ const PersonForm = ({
   persons,
   setPersons,
 }) => {
-  const addName = (e) => {
+  const addName = e => {
     e.preventDefault();
     if (
       persons.some(({ name }) => name.toLowerCase() === newName.toLowerCase())
@@ -14,18 +16,17 @@ const PersonForm = ({
       alert(`${newName} is already added to phonebook`);
     } else {
       const name = { name: newName, number: newNumber };
-      setPersons(persons.concat(name));
+      noteService
+        .create(name)
+        .then(returnedName => setPersons(persons.concat(returnedName))
+      );
     }
     setNewName("");
     setNewNumber("");
   };
-  const handleNameChange = (e) => {
-    setNewName(e.target.value);
-  };
 
-  const handleNumberChange = (e) => {
-    setNewNumber(e.target.value);
-  };
+  const handleNameChange = e => setNewName(e.target.value);
+  const handleNumberChange = e => setNewNumber(e.target.value);
 
   return (
     <form onSubmit={addName}>

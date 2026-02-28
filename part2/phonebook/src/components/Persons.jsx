@@ -7,7 +7,7 @@ const Persons = ({ searchName, persons }) => {
   const namesToShow =
     searchName === ""
       ? persons
-      : persons.filter((p) => p.name.toLowerCase().includes(searchName));
+      : persons.filter(p => p.name.toLowerCase().includes(searchName.toLowerCase()));
 
   return (
     <div>

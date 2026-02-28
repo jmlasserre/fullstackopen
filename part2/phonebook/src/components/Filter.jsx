@@ -1,5 +1,5 @@
 const Filter = ({ searchName, setNewSearchName }) => {
-  const handleSearchChange = (e) => {
+  const handleSearchChange = e => {
     setNewSearchName(e.target.value);
   };
   return (
