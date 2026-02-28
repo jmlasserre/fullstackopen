@@ -11,10 +11,8 @@ const App = () => {
   const [searchName, setNewSearchName] = useState("");
 
   useEffect(() => {
-    nameService
-      .getAll()
-      .then(names => setPersons(names))
-  }, []);
+    nameService.getAll().then(names => setPersons(names))
+  }, [])
 
   return (
     <div>
@@ -30,7 +28,11 @@ const App = () => {
         setPersons={setPersons}
       />
       <h3>Numbers</h3>
-      <Persons searchName={searchName} persons={persons}/>
+      <Persons
+        searchName={searchName}
+        persons={persons}
+        setPersons={setPersons}
+      />
     </div>
   );
 };

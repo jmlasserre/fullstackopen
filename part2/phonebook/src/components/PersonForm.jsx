@@ -1,4 +1,4 @@
-import noteService from '../services/Persons';
+import nameService from '../services/Persons';
 
 const PersonForm = ({
   newName,
@@ -16,7 +16,7 @@ const PersonForm = ({
       alert(`${newName} is already added to phonebook`);
     } else {
       const name = { name: newName, number: newNumber };
-      noteService
+      nameService
         .create(name)
         .then(returnedName => setPersons(persons.concat(returnedName))
       );

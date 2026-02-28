@@ -7,4 +7,8 @@ const getAll = () => axios
 
 const create = newName => axios.post(baseUrl, newName).then(response => response.data);
 
-export default { getAll, create }
+const deleteName = id => {
+    axios.delete(`${baseUrl}${id}`)
+}
+
+export default { getAll, create, deleteName }
