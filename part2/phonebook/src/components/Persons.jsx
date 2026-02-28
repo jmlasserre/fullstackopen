@@ -4,6 +4,7 @@ const Persons = ({ searchName, persons }) => {
       {name} {number}
     </div>
   );
+  
   const namesToShow =
     searchName === ""
       ? persons

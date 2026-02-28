@@ -16,8 +16,6 @@ const App = () => {
       .then(names => setPersons(names))
   }, []);
 
-  
-
   return (
     <div>
       <h2>Phonebook</h2>
