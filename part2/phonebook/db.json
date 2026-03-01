@@ -24,6 +24,16 @@
       "id": "9cc6",
       "name": "John Marston",
       "number": "0232-5920-3"
+    },
+    {
+      "name": "NewPerson McHuman",
+      "number": "23123",
+      "id": "fa05"
+    },
+    {
+      "id": "23d5",
+      "name": "asd",
+      "number": "23"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

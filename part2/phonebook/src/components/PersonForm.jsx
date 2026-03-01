@@ -7,6 +7,7 @@ const PersonForm = ({
   setNewNumber,
   persons,
   setPersons,
+  setMessage
 }) => {
   const addName = e => {
     e.preventDefault();
@@ -19,12 +20,15 @@ const PersonForm = ({
         nameService
           .update(name, id)
           .then(updatedName => setPersons(persons.map(p => p.id === id ? updatedName : p)));
+          setMessage(`Updated ${newName}'s number.`);
+          setTimeout(() => setMessage(null), 5000);
       }
     } else {
       nameService
         .create(name)
-        .then(returnedName => setPersons(persons.concat(returnedName))
-      );
+        .then(returnedName => setPersons(persons.concat(returnedName)));
+        setMessage(`Added ${newName}.`);
+        setTimeout(() => setMessage(null), 5000);
     }
     setNewName("");
     setNewNumber("");
