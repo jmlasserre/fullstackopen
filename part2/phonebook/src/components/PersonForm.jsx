@@ -10,12 +10,17 @@ const PersonForm = ({
 }) => {
   const addName = e => {
     e.preventDefault();
+    const name = { name: newName, number: newNumber };
     if (
-      persons.some(({ name }) => name.toLowerCase() === newName.toLowerCase())
+      persons.some(({ name }) => name === newName)
     ) {
-      alert(`${newName} is already added to phonebook`);
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        const id = persons.find(p => p.name === newName).id;
+        nameService
+          .update(name, id)
+          .then(updatedName => setPersons(persons.map(p => p.id === id ? updatedName : p)));
+      }
     } else {
-      const name = { name: newName, number: newNumber };
       nameService
         .create(name)
         .then(returnedName => setPersons(persons.concat(returnedName))
