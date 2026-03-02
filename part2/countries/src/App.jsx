@@ -1,6 +1,6 @@
 import countryService from "./services/CountryService";
+import Country from "./components/Country";
 import { useState, useEffect } from "react";
-import Message from "./components/Message";
 
 const App = () => {
   const [searchCountry, setSearchCountry] = useState("");
@@ -14,6 +14,23 @@ const App = () => {
 
   const handleCountryChange = (e) => setSearchCountry(e.target.value);
 
+  const createCountryShowcase = (c) => {
+    return (
+      <div key={c.name.common}>
+        <h1>{c.name.common}</h1>
+        <div>{`Capital ${c.capital[0]}`}</div>
+        <div>{`Area ${c.area}`}</div>
+        <h2>Languages</h2>
+        <ul>
+          {Object.values(c.languages).map((l) => (
+            <li key={l}>{l}</li>
+          ))}
+        </ul>
+        <img src={c.flags.png} alt={`Flag of ${c.name.common}`}></img>
+      </div>
+    );
+  };
+
   const countriesToShow = () => {
     let listOfCountries =
       searchCountry !== ""
@@ -22,33 +39,18 @@ const App = () => {
           )
         : [];
     if (listOfCountries.length > 10) {
-      return (
-      <>
-        Too many matches, specify another filter 
-      </>);
+      return <>Too many matches, specify another filter</>;
     } else {
       if (listOfCountries.length === 1) {
-        return (
-          <>
-            {listOfCountries.map((c) => (
-              <div key={c.name.common}>
-                <h1>{c.name.common}</h1>
-                <div>{`Capital ${c.capital[0]}`}</div>
-                <div>{`Area ${c.area}`}</div>
-                <h2>Languages</h2>
-                <ul>
-                  {Object.values(c.languages).map((l) => (
-                    <li key={l}>{l}</li>
-                  ))}
-                </ul>
-                <img src={c.flags.png} alt={`Flag of ${c.name.common}`}></img>
-              </div>
-            ))}
-          </>
-        );
+        return listOfCountries.map((c) => createCountryShowcase(c));
       } else {
         return listOfCountries.map((c) => (
-          <div key={c.name.common}>{c.name.common}</div>
+          <div key={c.name.common}>
+            <Country
+              country={c}
+              createCountryShowcase={createCountryShowcase}
+            />
+          </div>
         ));
       }
     }
@@ -56,7 +58,10 @@ const App = () => {
 
   return (
     <div>
-      <div>find countries <input value={searchCountry} onChange={handleCountryChange} /></div>
+      <div>
+        find countries{" "}
+        <input value={searchCountry} onChange={handleCountryChange} />
+      </div>
       <div>{countriesToShow()}</div>
     </div>
   );
