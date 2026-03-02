@@ -10,27 +10,17 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [searchName, setNewSearchName] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(null);
+  const [notificationType, setNotificationType] = useState("");
 
   useEffect(() => {
     nameService.getAll().then(names => setPersons(names))
   }, [])
 
-  const successStyle = {
-    borderStyle: 'solid',
-    fontSize: '20px',
-    borderRadius: '5px',
-    padding: '10px',
-    marginBottom: '10px',
-    borderColor: 'green',
-    background: 'lightgrey',
-    color: 'green'
-  }
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message} style={successStyle}/>
+      <Notification message={message} type={notificationType}/>
       <Filter searchName={searchName} setNewSearchName={setNewSearchName} />
       <h3>Add a new</h3>
       <PersonForm
@@ -41,6 +31,7 @@ const App = () => {
         persons={persons}
         setPersons={setPersons}
         setMessage={setMessage}
+        setNotificationType={setNotificationType}
       />
       <h3>Numbers</h3>
       <Persons

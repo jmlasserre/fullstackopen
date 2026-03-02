@@ -1,29 +1,9 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "123555535",
-      "id": "1"
-    },
-    {
-      "name": "Ada Lovelace",
-      "number": "5432-223",
-      "id": "2"
-    },
-    {
-      "name": "Dan Abramov",
-      "number": "12-43-234345",
-      "id": "3"
-    },
-    {
       "name": "Mary Poppendieck",
       "number": "00298582-433",
       "id": "4"
-    },
-    {
-      "id": "9cc6",
-      "name": "John Marston",
-      "number": "0232-5920-3"
     },
     {
       "name": "NewPerson McHuman",
@@ -31,9 +11,14 @@
       "id": "fa05"
     },
     {
-      "id": "23d5",
+      "id": "cf4a",
+      "name": "gds31",
+      "number": "123"
+    },
+    {
+      "id": "3d64",
       "name": "asd",
-      "number": "23"
+      "number": "asd"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
