@@ -57,6 +57,17 @@ app.post('/api/persons', (req, res) => {
         name: body.name,
         number: body.number
     };
+    if (notes.some(otherNote => otherNote.name === note.name && otherNote.number === note.number)){
+        // The person has already been added.
+        return res.status(409).json({
+            error: "Name has already been added to phonebook"
+        });
+    }
+    if (!note.name || !note.number){
+        return res.status(400).json({
+            error: "Missing attributes"
+        })
+    }
     notes = notes.concat(note);
     res.json(notes);
 })

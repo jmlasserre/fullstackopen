@@ -15,3 +15,10 @@ content-type: application/json
     "name": "John Marston",
     "number": "2301-2504"
 }
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Idont Haveanumberson"
+}
