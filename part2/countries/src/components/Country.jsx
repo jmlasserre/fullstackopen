@@ -1,22 +1,30 @@
 import { useState } from "react";
+import CountryShowcase from "./CountryShowcase";
 
-const Country = ({ country, createCountryShowcase }) => {
+const Country = ({ country, showButton }) => {
   const [shown, setShown] = useState(false);
 
   const showCountryShowcase = () => {
     setShown(!shown);
-    console.log("hello")
   };
 
-  return (
+  if (showButton) {
+    return (
+      <>
+        {country.name.common}{" "}
+        <button onClick={() => showCountryShowcase()}>
+          {shown ? "hide" : "show"}
+        </button>
+        <CountryShowcase country={country} shown={shown} />
+      </>
+    );
+  } else {
+    return (
     <>
-      {country.name.common}{" "}
-      <button onClick={() => showCountryShowcase()}>
-        {shown ? "hide" : "show"}
-      </button>
-      {shown ? createCountryShowcase(country) : <></>}
+      <CountryShowcase country={country} shown={true}/>
     </>
-  );
+    )
+  }
 };
 
 export default Country;
