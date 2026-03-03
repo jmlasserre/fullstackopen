@@ -50,6 +50,17 @@ app.delete('/api/persons/:id', (req, res) => {
     res.status(204).end();
 })
 
+app.post('/api/persons', (req, res) => {
+    const body = req.body;
+    const note = {
+        id: Math.round(Math.random()*9999999),
+        name: body.name,
+        number: body.number
+    };
+    notes = notes.concat(note);
+    res.json(notes);
+})
+
 const PORT = 3001;
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
