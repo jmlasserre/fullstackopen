@@ -1,14 +1,14 @@
-GET http://localhost:3001/api/persons
+GET https://fullstackopen-gaxo.onrender.com/api/persons
 ###
-GET http://localhost:3001/info
+GET https://fullstackopen-gaxo.onrender.com/info
 ###
-GET http://localhost:3001/api/persons/1
+GET https://fullstackopen-gaxo.onrender.com/api/persons/2
 ###
-GET http://localhost:3001/api/persons/67
+GET https://fullstackopen-gaxo.onrender.com/api/persons/67
 ###
-DELETE http://localhost:3001/api/persons/1
+DELETE https://fullstackopen-gaxo.onrender.com/api/persons/1
 ###
-POST http://localhost:3001/api/persons HTTP/1.1
+POST https://fullstackopen-gaxo.onrender.com/api/persons HTTP/1.1
 content-type: application/json
 
 {
@@ -16,9 +16,17 @@ content-type: application/json
     "number": "2301-2504"
 }
 ###
-POST http://localhost:3001/api/persons HTTP/1.1
+POST https://fullstackopen-gaxo.onrender.com/api/persons HTTP/1.1
 content-type: application/json
 
 {
     "name": "Idont Haveanumberson"
+}
+###
+PUT https://fullstackopen-gaxo.onrender.com/api/persons/2 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Ada Lovelace",
+    "number": "9"
 }
