@@ -59,8 +59,10 @@ app.delete('/api/persons/:id', (req, res) => {
 
 app.put('/api/persons/:id', (req, res) => {
     const nameToReplace = req.body.name;
-    const id = req.params.id;
-    names.map(otherName => otherName.name === nameToReplace.name ? req.body.name : otherName);
+    const newNumber = req.body.number;
+    const existingName = names.find(otherName => otherName.name === nameToReplace);
+    const newName = {...existingName, number: newNumber };
+    names = names.map(otherName => otherName.name === nameToReplace ? newName : otherName);
     return res.json(req.body);
 })
 

@@ -30,3 +30,13 @@ content-type: application/json
     "name": "Ada Lovelace",
     "number": "9"
 }
+###
+PUT http://localhost:3001/api/persons/2 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Ada Lovelace",
+    "number": "9"
+}
+###
+GET http://localhost:3001/api/persons
