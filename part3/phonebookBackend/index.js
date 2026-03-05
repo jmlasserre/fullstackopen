@@ -5,7 +5,7 @@ const app = express();
 
 morgan.token(`body`, (req, res) => JSON.stringify(req.body))
 
-let notes = [
+let names = [
     { 
       "id": "1",
       "name": "Arto Hellas", 
@@ -34,18 +34,18 @@ app.use(express.static('dist'));
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
 
 app.get('/api/persons', (req, res) => {
-    res.json(notes);
+    res.json(names);
 })
 
 app.get('/info', (req, res) => {
-    res.send(`<p>Phonebook has info for ${notes.length} people</p><p>${new Date()}</p>`);
+    res.send(`<p>Phonebook has info for ${names.length} people</p><p>${new Date()}</p>`);
 })
 
 app.get('/api/persons/:id', (req, res) =>  {
     const id = req.params.id;
-    const note = notes.find(note => note.id === id);
-    if (note){
-        res.json(note);
+    const newName = names.find(newName => newName.id === id);
+    if (newName){
+        res.json(newName);
     } else {
         res.status(404).end();
     }
@@ -53,30 +53,33 @@ app.get('/api/persons/:id', (req, res) =>  {
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = req.params.id;
-    notes = notes.filter(note => note.id !== id);
+    names = names.filter(newName => newName.id !== id);
     res.status(204).end();
+})
+
+app.put('/api/persons/:id', (req, res) => {
+    const newNumber = req.body.name.number;
+    const id = req.params.id;
+    names[names.indexOf(names.find(otherName => otherName.id === id))].number = newNumber;
+    return res.json(req.body);
 })
 
 app.post('/api/persons', (req, res) => {
     const body = req.body;
-    const note = {
+    const newName = {
         id: Math.round(Math.random()*9999999),
         name: body.name,
         number: body.number
     };
-    if (notes.some(otherNote => otherNote.name === note.name && otherNote.number === note.number)){
-        // The person has already been added.
-        return res.status(409).json({
-            error: "Name has already been added to phonebook"
-        });
-    }
-    if (!note.name || !note.number){
+
+    if (!newName.name || !newName.number){
+        console.log("It's missing an attribute you jerk")
         return res.status(400).json({
             error: "Missing attributes"
         })
     }
-    notes = notes.concat(note);
-    res.json(notes);
+    names = names.concat(newName);
+    res.json(names);
 })
 
 const port = process.env.PORT || 3001;

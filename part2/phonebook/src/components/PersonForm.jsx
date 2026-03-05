@@ -25,7 +25,7 @@ const PersonForm = ({
           .then((updatedName) =>
             setPersons(persons.map((p) => (p.id === id ? updatedName : p))),
           )
-          .catch((error) => {
+          .catch((e) => {
             setNotificationType("error");
             setMessage(
               `Information of ${newName} has already been removed from server.`,
@@ -39,7 +39,7 @@ const PersonForm = ({
     } else {
       nameService
         .create(name)
-        .then((returnedName) => setPersons(persons.concat(returnedName)));
+        .then((returnedName) => setPersons(returnedName));
       setNotificationType("success");
       setMessage(`Added ${newName}.`);
       setTimeout(() => setMessage(null), 5000);
