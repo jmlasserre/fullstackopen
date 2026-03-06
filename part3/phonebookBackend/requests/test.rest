@@ -1,6 +1,6 @@
 GET https://fullstackopen-gaxo.onrender.com/api/persons
 ###
-GET https://fullstackopen-gaxo.onrender.com/info
+GET https://fullstackopen-gaxo.onrender.com/
 ###
 GET https://fullstackopen-gaxo.onrender.com/api/persons/2
 ###
