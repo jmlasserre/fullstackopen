@@ -84,6 +84,8 @@ app.post('/api/persons', (req, res) => {
     res.json(names);
 })
 
+// Finally fixed it. The path was incorrectly typed, meaning it never copied 'dist' into the root directory. My bad.
+
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
     console.log(`Listening on port ${port}`)
