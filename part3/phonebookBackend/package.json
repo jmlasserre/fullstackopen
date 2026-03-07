@@ -10,6 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "node --watch index.js",
+    "lint": "npx eslint . && prettier . --write",
     "build:ui": "rm -rf dist && cd ../../part2/phonebook && npm run build && cp -r dist ../../part3/phonebookBackend/",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
@@ -20,5 +21,10 @@
     "mongoose": "^9.2.4",
     "morgan": "^1.10.1",
     "vite": "^7.3.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0"
   }
 }

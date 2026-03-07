@@ -17,21 +17,26 @@ app.use(
 );
 
 app.get("/api/persons", (req, res) => {
-  let persons = [];
   Person.find({}).then((result) => {
-    res.json(result.map(person => person));
+    res.json(result.map((person) => person));
   });
 });
 
 app.get("/info", (req, res) => {
-  res.send(
-    `<p>Phonebook has info for ${Person.length} people</p><p>${new Date()}</p>`,
-  );
+  Person.find({}).then((result) => {
+    res.send(
+      `<p>Phonebook has info for ${result.length} people</p><p>${new Date()}</p>`,
+    );
+  });
 });
 
 app.get("/api/persons/:id", (req, res) => {
-  Person.findById(req.params.id).then((person) => {
+  Person.findById(req.params.id)
+  .then((person) => {
     res.json(person);
+  })
+  .catch(() => {
+    res.status(404).end();
   });
 });
 
