@@ -12,12 +12,13 @@
     "dev": "node --watch index.js",
     "lint": "npx eslint . && prettier . --write",
     "build:ui": "rm -rf dist && cd ../../part2/phonebook && npm run build && cp -r dist ../../part3/phonebookBackend/",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+    "launch:local": "npm run build:ui && npm run dev"
   },
   "dependencies": {
-    "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "express-requests-logger": "^4.0.3",
     "mongoose": "^9.2.4",
     "morgan": "^1.10.1",
     "vite": "^7.3.1"
