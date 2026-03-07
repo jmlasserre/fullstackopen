@@ -49,19 +49,10 @@ app.delete("/api/persons/:id", (req, res, next) => {
 });
 
 app.put("/api/persons/:id", (req, res, next) => {
-  const number = req.body.number;
-  if (!number) {
-    return res.status(400).json({
-      error: "Missing attributes",
-    });
-  }
-  Person.findById(req.params.id)
-    .then((person) => {
-      if (person) {
-        person.number = number;
-        person.save().then((savedPerson) => {
-          res.json(savedPerson);
-        });
+  Person.findByIdAndUpdate(req.params.id, {number: req.body.number}, { runValidators: true })
+    .then(person => {
+      if (person){
+        res.json(person)
       } else {
         return res.status(404).end();
       }
@@ -69,7 +60,7 @@ app.put("/api/persons/:id", (req, res, next) => {
     .catch((error) => next(error));
 });
 
-app.post("/api/persons", (req, res) => {
+app.post("/api/persons", (req, res, next) => {
   const body = req.body;
 
   const person = new Person({
@@ -77,15 +68,11 @@ app.post("/api/persons", (req, res) => {
     number: body.number,
   });
 
-  if (!person.name || !person.number) {
-    return res.status(400).json({
-      error: "Missing attributes",
-    });
-  }
-
-  person.save().then((savedPerson) => {
-    res.json(savedPerson);
-  });
+  person.save().
+    then((savedPerson) => {
+      res.json(savedPerson);
+    })
+    .catch(error => next(error));
 });
 
 const unknownEndpoint = (req, res) => {
@@ -95,9 +82,10 @@ const unknownEndpoint = (req, res) => {
 app.use(unknownEndpoint);
 
 const errorHandler = (error, req, res, next) => {
-  console.error(error.message);
   if (error.name === "CastError") {
     return res.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError"){
+    return res.status(400).send({ error: error.message });
   }
   next(error);
 };

@@ -22,28 +22,30 @@ const PersonForm = ({
         const id = persons.find((p) => p.name === newName).id;
         nameService
           .update(name, id)
-          .then((updatedName) =>
-            setPersons(persons.map((p) => (p.id === id ? updatedName : p))),
-          )
-          .catch(() => {
+          .then((updatedName) => {
+            setPersons(persons.map((p) => (p.id === id ? updatedName : p)));
+            setNotificationType("success");
+            setMessage(`Updated ${newName}'s number.`);
+          })
+          .catch((error) => {
             setNotificationType("error");
-            setMessage(
-              `Information of ${newName} has already been removed from server.`,
-            );
-            setPersons(persons.filter(p => p.name !== newName));
+            setMessage(error.response.data.error);
           });
-        setNotificationType("success");
-        setMessage(`Updated ${newName}'s number.`);
-        setTimeout(() => setMessage(null), 5000);
       }
     } else {
       nameService
         .create(name)
-        .then((returnedName) => setPersons(persons.concat(returnedName)));
-      setNotificationType("success");
-      setMessage(`Added ${newName}.`);
-      setTimeout(() => setMessage(null), 5000);
+        .then((returnedName) => {
+          setPersons(persons.concat(returnedName));
+          setNotificationType("success");
+          setMessage(`Added ${newName}.`);
+        })
+        .catch((error) => {
+          setNotificationType("error");
+          setMessage(error.response.data.error);
+        });
     }
+    setTimeout(() => setMessage(null), 5000);
     setNewName("");
     setNewNumber("");
   };
