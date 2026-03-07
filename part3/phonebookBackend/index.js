@@ -1,3 +1,5 @@
+// I did 3.14 while doing 3.13. My bad.
+
 require("dotenv").config();
 const dns = require("node:dns/promises");
 dns.setServers(["1.1.1.1"]); // Found this fix online: https://www.mongodb.com/community/forums/t/error-querysrv-econnrefused-mongodb/259042/4
