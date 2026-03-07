@@ -6,7 +6,7 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
-morgan.token(`body`, (req, res) => JSON.stringify(req.body));
+morgan.token(`body`, (req) => JSON.stringify(req.body));
 
 app.use(express.static("dist"));
 app.use(express.json());
@@ -42,14 +42,19 @@ app.get("/api/persons/:id", (req, res, next) => {
 
 app.delete("/api/persons/:id", (req, res, next) => {
   Person.findByIdAndDelete(req.params.id)
-    .then((result) => {
+    .then(() => {
       res.status(204).end();
     })
     .catch((error) => next(error));
 });
 
 app.put("/api/persons/:id", (req, res, next) => {
-  const number = req.body;
+  const number = req.body.number;
+  if (!number) {
+    return res.status(400).json({
+      error: "Missing attributes",
+    });
+  }
   Person.findById(req.params.id)
     .then((person) => {
       if (person) {

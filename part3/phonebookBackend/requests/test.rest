@@ -46,3 +46,20 @@ GET http://localhost:3001/api/persons/69ab27fc8736b2b3731da257
 GET http://localhost:3001/info
 ###
 GET http://localhost:3001/api/persons/231223
+###
+PUT http://localhost:3001/api/persons/231223 HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Ada Lovelace"
+}
+###
+POST http://localhost:3001/api/persons HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Ada Lovelace",
+    "number": "590213-521"
+}
+###
+GET http://localhost:3001/api/persons/69ac5f9b26d7325a9b131d1c
