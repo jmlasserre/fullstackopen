@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+// Tested in Render, working as expected both locally and while deployed.
+
 mongoose.set("strictQuery", false);
 
 const url = process.env.MONGODB_URI;
