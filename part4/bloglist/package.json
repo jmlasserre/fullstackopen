@@ -8,7 +8,8 @@
   "main": "index.js",
   "scripts": {
     "test": "node --test",
-    "dev": "node --watch ."
+    "dev": "node --watch .",
+    "lint": "npx eslint . --fix"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
