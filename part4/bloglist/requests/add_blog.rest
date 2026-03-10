@@ -2,7 +2,7 @@ POST http://localhost:3003/api/blogs HTTP/1.1
 content-type: application/json
 
 {
-    "title": "My Awesome Blog",
+    "title": "My Awesome Blog 2",
     "author": "jmlasserre",
     "url": "www.leepicblog.com.uy",
     "likes": 2
