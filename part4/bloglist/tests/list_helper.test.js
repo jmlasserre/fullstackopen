@@ -131,3 +131,27 @@ describe('favorite blog', () => {
     assert.deepStrictEqual(listHelper.favoriteBlog(listWithEqualMostLikes), listWithEqualMostLikes[0])
   })
 })
+
+describe('author with most blogs', () => {
+  test('of an empty list is null', () => {
+    assert.deepStrictEqual(listHelper.mostBlogs([]), null)
+  })
+  test('of a list with many blogs is that author', () => {
+    assert.deepStrictEqual(listHelper.mostBlogs(listWithManyBlogs), {
+      author: 'Robert C. Martin',
+      blogs: 3
+    })
+  })
+  test('of a list with a single blog is that blogs author', () => {
+    assert.deepStrictEqual(listHelper.mostBlogs(listWithOneBlog), {
+      author: 'Edsger W. Dijkstra',
+      blogs: 1
+    })
+  })
+  test('of a list with two or more authors with the most blogs is any of them', () => {
+    assert.deepStrictEqual(listHelper.mostBlogs(listWithEqualMostLikes), {
+      author: 'Robert C. Martin',
+      blogs: 1
+    })
+  })
+})
