@@ -95,6 +95,4 @@ const mostLikes = (blogs) => {
   }
 }
 
-
-console.log(mostLikes(listWithManyBlogs))
 module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }

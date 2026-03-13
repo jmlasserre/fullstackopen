@@ -1,3 +1,6 @@
+const dns = require('node:dns/promises')
+dns.setServers(['1.1.1.1'])
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const blogRouter = require('./controllers/blogs')
@@ -11,7 +14,7 @@ mongoose
     console.log('Successfully connected to MongoDB')
   })
   .catch((e) => {
-    console.log('Error connecting to MongoDB: ', e.message)
+    console.log(MONGODB_URI, 'Error connecting to MongoDB: ', e.message)
   })
 
 app.use(express.json())
