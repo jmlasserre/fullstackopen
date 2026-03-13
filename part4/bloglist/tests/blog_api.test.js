@@ -8,21 +8,26 @@ const testHelper = require('./test_helper')
 
 beforeEach(async () => {
     await Blog.deleteMany({})
-    await Blog.insertMany(testHelper.initialBlogs);
+    await Blog.insertMany(testHelper.initialBlogs)
 })
 
 const api = supertest(app)
 
-test.only('blogs are returned as JSON', async () => {
+test('blogs are returned as JSON', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
 
-test.only('all blogs are returned', async () => {
+test('all blogs are returned', async () => {
   const blogs = await api.get('/api/blogs')
   assert.strictEqual(blogs.body.length, testHelper.initialBlogs.length)
+})
+
+test.only('all blogs have an id', async () => {
+    const blogs = await api.get('/api/blogs')
+    assert.strictEqual(blogs.body.every(blog => Object.hasOwn(blog, 'id') && !Object.hasOwn(blog, '_id')), true)
 })
 
 after(async () => {
