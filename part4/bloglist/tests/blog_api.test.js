@@ -30,7 +30,7 @@ test('all blogs have an id', async () => {
   assert.strictEqual(blogs.body.every(blog => Object.hasOwn(blog, 'id') && !Object.hasOwn(blog, '_id')), true)
 })
 
-test.only('a blog is added to the database', async () => {
+test('a blog is added to the database', async () => {
   const blog = {
     title: 'The Test Blog',
     author: 'jmlasserre',
@@ -49,6 +49,16 @@ test.only('a blog is added to the database', async () => {
   assert.strictEqual(addedBlog.likes, blog.likes)
 })
 
+test.only('a blog with no likes reverts to 0', async () => {
+    const blog = {
+    title: 'The Test Blog',
+    author: 'jmlasserre',
+    url: 'http://example-link.com',
+  }
+  const result = await api.post('/api/blogs').send(blog)
+  const addedBlog = (await Blog.find({ title: blog.title, author: blog.author, url: blog.url }))[0]
+  assert.strictEqual(addedBlog.likes, 0)
+})
 after(async () => {
   await mongoose.connection.close()
 })
