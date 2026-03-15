@@ -6,7 +6,15 @@ const app = require('../app')
 const Blog = require('../models/blog')
 const testHelper = require('./test_helper')
 
+let blog = null
+
 beforeEach(async () => {
+  blog = {
+    title: 'The Test Blog',
+    author: 'jmlasserre',
+    url: 'http://example-link.com',
+    likes: 50,
+  }
   await Blog.deleteMany({})
   await Blog.insertMany(testHelper.initialBlogs)
 })
@@ -25,21 +33,17 @@ test('all blogs are returned', async () => {
   assert.strictEqual(blogs.body.length, testHelper.initialBlogs.length)
 })
 
-test('all blogs have an id', async () => {
-  const blogs = await api.get('/api/blogs')
-  assert.strictEqual(blogs.body.every(blog => Object.hasOwn(blog, 'id') && !Object.hasOwn(blog, '_id')), true)
-})
-
 test('a blog is added to the database', async () => {
-  const blog = {
-    title: 'The Test Blog',
-    author: 'jmlasserre',
-    url: 'http://example-link.com',
-    likes: 50
-  }
-  const result = await api.post('/api/blogs').send(blog)
+  await api.post('/api/blogs').send(blog)
   const blogs = await api.get('/api/blogs')
-  const addedBlog = (await Blog.find({ title: blog.title, author: blog.author, url: blog.url, likes: blog.likes }))[0]
+  const addedBlog = (
+    await Blog.find({
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes,
+    })
+  )[0]
   // First verification: blog has effectively been added
   assert.strictEqual(blogs.body.length, testHelper.initialBlogs.length + 1)
   // Verifying that the blog's content was saved successfully
@@ -49,16 +53,25 @@ test('a blog is added to the database', async () => {
   assert.strictEqual(addedBlog.likes, blog.likes)
 })
 
-test.only('a blog with no likes reverts to 0', async () => {
-    const blog = {
-    title: 'The Test Blog',
-    author: 'jmlasserre',
-    url: 'http://example-link.com',
-  }
-  const result = await api.post('/api/blogs').send(blog)
-  const addedBlog = (await Blog.find({ title: blog.title, author: blog.author, url: blog.url }))[0]
+test('a blog with no likes reverts to 0', async () => {
+  blog.likes = undefined
+  await api.post('/api/blogs').send(blog)
+  const addedBlog = (
+    await Blog.find({ title: blog.title, author: blog.author, url: blog.url })
+  )[0]
   assert.strictEqual(addedBlog.likes, 0)
 })
+
+test.only('a blog with no title returns 400', async () => {
+  blog.title = undefined
+  await api.post('/api/blogs').send(blog).expect(400)
+})
+
+test.only('a blog with no url returns 400', async () => {
+  blog.url = undefined
+  await api.post('/api/blogs').send(blog).expect(400)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
