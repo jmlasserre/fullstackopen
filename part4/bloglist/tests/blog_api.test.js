@@ -99,6 +99,27 @@ describe('deleting a blog', () => {
 
 })
 
+describe('updating blogs', () => {
+  test('updating a blog updates its like count', async () => {
+    const blogs = await api.get('/api/blogs')
+    const oneBlog = blogs.body[0]
+    const newLikes = 250
+    oneBlog.likes = newLikes
+    await api.put(`/api/blogs/${oneBlog.id}`).send(oneBlog).expect(204)
+    const sameBlog = await api.get(`/api/blogs/${oneBlog.id}`)
+    assert.strictEqual(sameBlog.body.likes, newLikes)
+  })
+
+  test('updating a blog that does not exist returns 404', async () => {
+    const blogs = await api.get('/api/blogs')
+    let oneBlog = blogs.body[0]
+    const newLikes = 67
+    await api.delete(`/api/blogs/${oneBlog.id}`)
+    oneBlog.likes = newLikes
+    await api.put(`/api/blogs/${oneBlog.id}`).send(oneBlog).expect(404)
+  })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
