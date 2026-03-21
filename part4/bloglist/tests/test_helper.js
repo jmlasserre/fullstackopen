@@ -86,6 +86,23 @@ const listWithEqualMostLikes = [
   },
 ]
 
+const validUser = {
+  username: 'jmlasserre',
+  name: 'Juan Lasserre',
+  password: 'safepassword123'
+}
+
+const invalidUserNoPass = {
+  username: 'arandomuser',
+  name: 'Chuck Norris',
+  password: 'no'
+}
+
+const invalidUserNoUsername = {
+  name: 'Aaron Turner',
+  password: 'neurosis123'
+}
+
 const initialBlogs = listWithManyBlogs
 
-module.exports = { initialBlogs, listWithOneBlog, listWithManyBlogs, listWithEqualMostLikes }
+module.exports = { validUser, invalidUserNoPass, invalidUserNoUsername, initialBlogs, listWithOneBlog, listWithManyBlogs, listWithEqualMostLikes }

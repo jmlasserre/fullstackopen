@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test node --test --test-only",
+    "test": "cross-env NODE_ENV=test node --test --test-only --test-concurrency=1",
     "dev": "cross-env NODE_ENV=development node --watch index.js",
     "lint": "eslint . --fix",
     "start": "cross-env NODE_ENV=production node index.js"
